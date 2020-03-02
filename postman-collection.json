@@ -1,0 +1,84 @@
+{
+  "info": {
+    "_postman_id": "e1ddbb8f-7ba9-4b63-ae75-3ed4504c3486",
+    "name": "Feed API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Find by Id",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{jwtToken}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{feedApp}}/feeds/{{feedId}}",
+          "host": [
+            "{{feedApp}}"
+          ],
+          "path": [
+            "feeds",
+            "{{feedId}}"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Create Feed",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "id": "8e05a2db-d295-4cf6-9415-a4924f7055c0",
+            "exec": [
+              "var response = JSON.parse(responseBody);",
+              "pm.environment.set(\"feedId\", response.id);"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "name": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n\t\"caption\": \"Test\",\n    \"fileName\": \"test.jpg\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{feedApp}}/feeds",
+          "host": [
+            "{{feedApp}}"
+          ],
+          "path": [
+            "feeds"
+          ]
+        }
+      },
+      "response": []
+    }
+  ],
+  "protocolProfileBehavior": {}
+}
