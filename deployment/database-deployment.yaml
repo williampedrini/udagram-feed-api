@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: feed-database
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      name: feed-database
+  template:
+    metadata:
+      labels:
+        name: feed-database
+        version: 1.0.0
+        component: database
+    spec:
+      containers:
+        - name: feed-database-container
+          env:
+            - name: POSTGRES_USER
+              valueFrom:
+                secretKeyRef:
+                  name: feed-secret
+                  key: database-username
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: feed-secret
+                  key: database-password
+            - name: POSTGRES_DB
+              valueFrom:
+                secretKeyRef:
+                  name: feed-secret
+                  key: database-schema
+          image: postgres:latest
+          ports:
+            - containerPort: 5432

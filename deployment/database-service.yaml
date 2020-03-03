@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: feed-database
+  labels:
+    name: feed-database
+    component: service
+spec:
+  ports:
+    - port: 5432
+      targetPort: 5432
+      protocol: TCP
+  selector:
+    name: feed-database
+    component: database

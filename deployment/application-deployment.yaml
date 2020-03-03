@@ -1,0 +1,63 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: feed-api
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      name: feed-api
+  template:
+    metadata:
+      labels:
+        name: feed-api
+        version: 1.0.0
+        component: api
+    spec:
+      containers:
+        - name: feed-api-container
+          env:
+            - name: AWS_ACCESS_KEY_ID
+              valueFrom:
+                secretKeyRef:
+                  name: feed-secret
+                  key: aws-access-key-id
+            - name: AWS_REGION
+              valueFrom:
+                secretKeyRef:
+                  name: feed-secret
+                  key: aws-region
+            - name: AWS_S3_BUCKET
+              valueFrom:
+                secretKeyRef:
+                  name: feed-secret
+                  key: aws-s3-bucket
+            - name: AWS_SECRET_ACCESS_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: feed-secret
+                  key: aws-secret-access-key
+            - name: AUTHENTICATION_API_HOST
+              value: "authentication-api"
+            - name: POSTGRESS_DB
+              valueFrom:
+                secretKeyRef:
+                  name: feed-secret
+                  key: database-schema
+            - name: POSTGRESS_HOST
+              value: "feed-database"
+            - name: POSTGRESS_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: feed-secret
+                  key: database-password
+            - name: POSTGRESS_PORT
+              value: "5432"
+            - name: POSTGRESS_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: feed-secret
+                  key: database-username
+          image: williamcustodio/udagram_feed_api:latest
+          ports:
+            - containerPort: 8082

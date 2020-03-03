@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: feed-api
+  labels:
+    name: feed-api
+    component: service
+spec:
+  ports:
+    - port: 8082
+      targetPort: 8082
+      protocol: TCP
+  selector:
+    name: feed-api
+    component: api
