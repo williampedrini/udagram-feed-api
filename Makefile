@@ -31,6 +31,7 @@ deployment:
 	kubectl apply -f ./deployment/application-service.yaml;
 
 image:
+	docker login -u ${DOCKER_USERNAME} -p ${DOCKER_PASSWORD}
 	docker build -t $(IMAGE) .
 
 kubectl:
