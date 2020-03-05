@@ -1,4 +1,4 @@
-# Rest House API
+# Udagram Feed API
 
 This project contains a Feed API responsible for managing CRUD operations related to feeds.
 
